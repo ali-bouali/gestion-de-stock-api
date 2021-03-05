@@ -1,0 +1,34 @@
+Partie 1 : Introduction au projet
+Partie 2 : Creation du projet et des entités #1
+Partie 3 : Creation du projet et des entités #2
+Partie 4 : Creation du projet et des entités #3
+Partie 5 : Creation du projet et des entités #4
+Partie 6 : Creation des DTOs #1
+Partie 7 : Creation des DTOs #2
+Partie 8 : Creation des DTOs #3
+Partie 9 : Creation des Validators #1
+Partie 10 : Creation des Validators #2
+Partie 11 : Creation des exceptions personalisées & la couche DAO
+Partie 12 : Creation des Services & Contrôleurs #1
+Partie 13 : Creation des Services & Contrôleurs #2
+Partie 14 : Creation des Services & Contrôleurs #3
+Partie 15 : Creation du Service Photo avec Flickr API
+Partie 16 : Creation de la documentation de l'API avec SWAGGER-UI
+Partie 17 : Generation de la documentation de l'API (Swagger.json)
+Partie 18 : Finalisation de la documentation de l'API
+Partie 19 : Q/A Session 1
+Partie 20 : Finalisation des contrôleurs #1
+Partie 21 : Finalisation des contrôleurs #2
+Partie 22 : Finalisation des contrôleurs #3
+Partie 23 : Finalisation des contrôleurs #4
+Partie 24 : Finalisation des contrôleurs #5
+Partie 25 : Q/A Session 2
+Partie 26 : Fixer le problème de "@CreatedDate" & "@LastModified" / Intercepter les requêtes Hibernate
+Partie 27 : Q/A Session 3
+Partie 28 : Implementer la securite de l'application avec JWT
+Partie 29 : Q/A Session 4
+Partie 30 : Ecrire les Tests Unitaires
+Partie 31 : Q/A Session 5
+Partie 32 : Ecrire les Tests d'integration avec Postman
+Partie 33 : Q/A Session 6
+
