@@ -4,10 +4,13 @@ import com.bouali.gestiondestock.dto.UtilisateurDto;
 import com.bouali.gestiondestock.exception.EntityNotFoundException;
 import com.bouali.gestiondestock.exception.ErrorCodes;
 import com.bouali.gestiondestock.exception.InvalidEntityException;
+import com.bouali.gestiondestock.model.Utilisateur;
 import com.bouali.gestiondestock.repository.UtilisateurRepository;
 import com.bouali.gestiondestock.services.UtilisateurService;
 import com.bouali.gestiondestock.validator.UtilisateurValidator;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
       log.error("Utilisateur is not valid {}", dto);
       throw new InvalidEntityException("L'utilisateur n'est pas valide", ErrorCodes.UTILISATEUR_NOT_VALID, errors);
     }
+
+    if(userAlreadyExists(dto.getEmail())) {
+      throw new InvalidEntityException("Un autre utilisateur avec le meme email existe deja", ErrorCodes.UTILISATEUR_ALREADY_EXISTS,
+          Collections.singletonList("Un autre utilisateur avec le meme email existe deja dans la BDD"));
+    }
+
+
     dto.setMoteDePasse(passwordEncoder.encode(dto.getMoteDePasse()));
 
     return UtilisateurDto.fromEntity(
@@ -43,6 +53,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             UtilisateurDto.toEntity(dto)
         )
     );
+  }
+
+  private boolean userAlreadyExists(String email) {
+    Optional<Utilisateur> user = utilisateurRepository.findUtilisateurByEmail(email);
+    return user.isPresent();
   }
 
   @Override

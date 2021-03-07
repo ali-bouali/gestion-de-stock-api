@@ -33,6 +33,7 @@ public class RolesDto {
     Roles roles = new Roles();
     roles.setId(dto.getId());
     roles.setRoleName(dto.getRoleName());
+    roles.setUtilisateur(UtilisateurDto.toEntity(dto.getUtilisateur()));
     return roles;
   }
 

@@ -20,7 +20,7 @@ public class Interceptor extends EmptyInterceptor {
         if (sql.contains("where")) {
           sql = sql + " and " + entityName + ".identreprise = " + idEntreprise;
         } else {
-          sql = sql + " where " + entityName + ". identreprise = " + idEntreprise;
+          sql = sql + " where " + entityName + ".identreprise = " + idEntreprise;
         }
       }
     }
