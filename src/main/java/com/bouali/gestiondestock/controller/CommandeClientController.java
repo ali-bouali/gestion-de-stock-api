@@ -3,7 +3,9 @@ package com.bouali.gestiondestock.controller;
 import com.bouali.gestiondestock.controller.api.CommandeClientApi;
 import com.bouali.gestiondestock.dto.CommandeClientDto;
 import com.bouali.gestiondestock.dto.LigneCommandeClientDto;
+import com.bouali.gestiondestock.model.EtatCommande;
 import com.bouali.gestiondestock.services.CommandeClientService;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,21 @@ public class CommandeClientController implements CommandeClientApi {
   @Override
   public ResponseEntity<CommandeClientDto> save(CommandeClientDto dto) {
     return ResponseEntity.ok(commandeClientService.save(dto));
+  }
+
+  @Override
+  public ResponseEntity<CommandeClientDto> updateEtatCommande(Integer idCommande, EtatCommande etatCommande) {
+    return ResponseEntity.ok(commandeClientService.updateEtatCommande(idCommande, etatCommande));
+  }
+
+  @Override
+  public ResponseEntity<CommandeClientDto> updateQuantiteCommande(Integer idCommande, Integer idLigneCommande, BigDecimal quantite) {
+    return ResponseEntity.ok(commandeClientService.updateQuantiteCommande(idCommande, idLigneCommande, quantite));
+  }
+
+  @Override
+  public ResponseEntity<CommandeClientDto> updateClient(Integer idCommande, Integer idClient) {
+    return ResponseEntity.ok(commandeClientService.updateClient(idCommande, idClient));
   }
 
   @Override
@@ -45,7 +62,7 @@ public class CommandeClientController implements CommandeClientApi {
   }
 
   @Override
-  public ResponseEntity delete(Integer id) {
+  public ResponseEntity<Void> delete(Integer id) {
     commandeClientService.delete(id);
     return ResponseEntity.ok().build();
   }

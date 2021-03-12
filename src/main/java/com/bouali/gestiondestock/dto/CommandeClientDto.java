@@ -1,6 +1,7 @@
 package com.bouali.gestiondestock.dto;
 
 import com.bouali.gestiondestock.model.CommandeClient;
+import com.bouali.gestiondestock.model.EtatCommande;
 import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,8 @@ public class CommandeClientDto {
 
   private Instant dateCommande;
 
+  private EtatCommande etatCommande;
+
   private ClientDto client;
 
   private Integer idEntreprise;
@@ -31,6 +34,7 @@ public class CommandeClientDto {
         .id(commandeClient.getId())
         .code(commandeClient.getCode())
         .dateCommande(commandeClient.getDateCommande())
+        .etatCommande(commandeClient.getEtatCommande())
         .client(ClientDto.fromEntity(commandeClient.getClient()))
         .idEntreprise(commandeClient.getIdEntreprise())
         .build();
@@ -45,8 +49,12 @@ public class CommandeClientDto {
     commandeClient.setId(dto.getId());
     commandeClient.setCode(dto.getCode());
     commandeClient.setDateCommande(dto.getDateCommande());
+    commandeClient.setEtatCommande(dto.getEtatCommande());
     commandeClient.setIdEntreprise(dto.getIdEntreprise());
     return commandeClient;
   }
 
+  public boolean isCommandeLivree() {
+    return EtatCommande.LIVREE.equals(this.etatCommande);
+  }
 }

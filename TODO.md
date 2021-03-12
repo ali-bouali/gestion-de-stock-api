@@ -2,15 +2,15 @@
 **️✔** Done  
 **x** Todo
 ###Commande client: 
-* Modifier la quantite **x**
-* Modifier le client **x** 
-* Modifier un article **x**
-* Supprimer un article **x**
-* Chercher les lignes de commande client par commande **x**
-* Ajouter un etat de dommande client **x**
+* Modifier la quantite **️✔**
+* Modifier le client **️✔**
+* Ajouter un etat de dommande client **️✔**
     * En cours de preparation
     * Commande validee
     * Commande livree
+* Modifier un article **x**
+* Supprimer un article **x**
+* Chercher les lignes de commande client par commande **x**
 
 #### Commande fournisseur:
 * Modifier la quantite **x**
@@ -56,6 +56,7 @@
 * Creer un module d'envoi des emails
 * Envoyer des emails pour:
     * Creation du compte entreprise
+        * Envoyer un email a l'utilisateur
     * Validation de l'@ email d'un utilisateur 
     * Creation d'un nouvel utilisateur
     * Commande client --> Validee / Livree
