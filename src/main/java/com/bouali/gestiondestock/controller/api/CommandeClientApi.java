@@ -33,6 +33,13 @@ public interface CommandeClientApi {
   @PatchMapping(APP_ROOT + "/commandesclients/update/client/{idCommande}/{idClient}")
   ResponseEntity<CommandeClientDto> updateClient(@PathVariable("idCommande") Integer idCommande, @PathVariable("idClient") Integer idClient);
 
+  @PatchMapping(APP_ROOT + "/commandesclients/update/article/{idCommande}/{idLigneCommande}/{idArticle}")
+  ResponseEntity<CommandeClientDto> updateArticle(@PathVariable("idCommande") Integer idCommande,
+      @PathVariable("idLigneCommande") Integer idLigneCommande, @PathVariable("idArticle") Integer newIdArticle);
+
+  @DeleteMapping(APP_ROOT + "/commandesclients/delete/article/{idCommande}/{idLigneCommande}")
+  ResponseEntity<CommandeClientDto> deleteArticle(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande);
+
   @GetMapping(APP_ROOT + "/commandesclients/{idCommandeClient}")
   ResponseEntity<CommandeClientDto> findById(@PathVariable Integer idCommandeClient);
 

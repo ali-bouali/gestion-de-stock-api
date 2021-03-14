@@ -2,6 +2,7 @@ package com.bouali.gestiondestock.dto;
 
 import com.bouali.gestiondestock.model.CommandeClient;
 import com.bouali.gestiondestock.model.EtatCommande;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ public class CommandeClientDto {
 
   private Integer idEntreprise;
 
+  @JsonIgnore
   private List<LigneCommandeClientDto> ligneCommandeClients;
 
   public static CommandeClientDto fromEntity(CommandeClient commandeClient) {

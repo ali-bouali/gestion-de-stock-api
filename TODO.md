@@ -8,9 +8,9 @@
     * En cours de preparation
     * Commande validee
     * Commande livree
-* Modifier un article **x**
-* Supprimer un article **x**
-* Chercher les lignes de commande client par commande **x**
+* Modifier un article **️✔**
+* Supprimer un article  **️✔**
+* Chercher les lignes de commande client par commande **️✔**
 
 #### Commande fournisseur:
 * Modifier la quantite **x**
@@ -28,6 +28,9 @@
     * Historique des ventes **x**
     * Historique des commandes client **x**
     * Historique des commandes fournisseurs **x**
+  
+#### Controleur Photo
+* Developper le controleur des photos **x**
 
 #### Mouvements de stock:
 * Calculer le stock reel de chaque article **x**
