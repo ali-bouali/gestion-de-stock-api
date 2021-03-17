@@ -1,6 +1,7 @@
 package com.bouali.gestiondestock.dto;
 
 import com.bouali.gestiondestock.model.CommandeFournisseur;
+import com.bouali.gestiondestock.model.EtatCommande;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.Instant;
 import java.util.List;
@@ -16,6 +17,8 @@ public class CommandeFournisseurDto {
   private String code;
 
   private Instant dateCommande;
+
+  private EtatCommande etatCommande;
 
   private FournisseurDto fournisseur;
 
@@ -33,6 +36,7 @@ public class CommandeFournisseurDto {
         .code(commandeFournisseur.getCode())
         .dateCommande(commandeFournisseur.getDateCommande())
         .fournisseur(FournisseurDto.fromEntity(commandeFournisseur.getFournisseur()))
+        .etatCommande(commandeFournisseur.getEtatCommande())
         .idEntreprise(commandeFournisseur.getIdEntreprise())
         .build();
   }
@@ -47,7 +51,12 @@ public class CommandeFournisseurDto {
     commandeFournisseur.setDateCommande(dto.getDateCommande());
     commandeFournisseur.setFournisseur(FournisseurDto.toEntity(dto.getFournisseur()));
     commandeFournisseur.setIdEntreprise(dto.getIdEntreprise());
+    commandeFournisseur.setEtatCommande(dto.getEtatCommande());
     return commandeFournisseur;
+  }
+
+  public boolean isCommandeLivree() {
+    return EtatCommande.LIVREE.equals(this.etatCommande);
   }
 
 }

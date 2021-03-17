@@ -35,7 +35,7 @@ public interface CommandeClientApi {
 
   @PatchMapping(APP_ROOT + "/commandesclients/update/article/{idCommande}/{idLigneCommande}/{idArticle}")
   ResponseEntity<CommandeClientDto> updateArticle(@PathVariable("idCommande") Integer idCommande,
-      @PathVariable("idLigneCommande") Integer idLigneCommande, @PathVariable("idArticle") Integer newIdArticle);
+      @PathVariable("idLigneCommande") Integer idLigneCommande, @PathVariable("idArticle") Integer idArticle);
 
   @DeleteMapping(APP_ROOT + "/commandesclients/delete/article/{idCommande}/{idLigneCommande}")
   ResponseEntity<CommandeClientDto> deleteArticle(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande);
@@ -43,7 +43,7 @@ public interface CommandeClientApi {
   @GetMapping(APP_ROOT + "/commandesclients/{idCommandeClient}")
   ResponseEntity<CommandeClientDto> findById(@PathVariable Integer idCommandeClient);
 
-  @GetMapping(APP_ROOT + "/commandesclients/{codeCommandeClient}")
+  @GetMapping(APP_ROOT + "/commandesclients/filter/{codeCommandeClient}")
   ResponseEntity<CommandeClientDto> findByCode(@PathVariable("codeCommandeClient") String code);
 
   @GetMapping(APP_ROOT + "/commandesclients/all")

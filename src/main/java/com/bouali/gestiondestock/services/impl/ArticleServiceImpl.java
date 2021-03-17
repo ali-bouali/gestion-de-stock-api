@@ -1,10 +1,16 @@
 package com.bouali.gestiondestock.services.impl;
 
 import com.bouali.gestiondestock.dto.ArticleDto;
+import com.bouali.gestiondestock.dto.LigneCommandeClientDto;
+import com.bouali.gestiondestock.dto.LigneCommandeFournisseurDto;
+import com.bouali.gestiondestock.dto.LigneVenteDto;
 import com.bouali.gestiondestock.exception.EntityNotFoundException;
 import com.bouali.gestiondestock.exception.ErrorCodes;
 import com.bouali.gestiondestock.exception.InvalidEntityException;
 import com.bouali.gestiondestock.repository.ArticleRepository;
+import com.bouali.gestiondestock.repository.LigneCommandeClientRepository;
+import com.bouali.gestiondestock.repository.LigneCommandeFournisseurRepository;
+import com.bouali.gestiondestock.repository.LigneVenteRepository;
 import com.bouali.gestiondestock.services.ArticleService;
 import com.bouali.gestiondestock.validator.ArticleValidator;
 import java.util.List;
@@ -19,12 +25,19 @@ import org.springframework.util.StringUtils;
 public class ArticleServiceImpl implements ArticleService {
 
   private ArticleRepository articleRepository;
+  private LigneVenteRepository venteRepository;
+  private LigneCommandeFournisseurRepository commandeFournisseurRepository;
+  private LigneCommandeClientRepository commandeClientRepository;
 
   @Autowired
   public ArticleServiceImpl(
-      ArticleRepository articleRepository
-  ) {
+      ArticleRepository articleRepository,
+      LigneVenteRepository venteRepository, LigneCommandeFournisseurRepository commandeFournisseurRepository,
+      LigneCommandeClientRepository commandeClientRepository) {
     this.articleRepository = articleRepository;
+    this.venteRepository = venteRepository;
+    this.commandeFournisseurRepository = commandeFournisseurRepository;
+    this.commandeClientRepository = commandeClientRepository;
   }
 
   @Override
@@ -75,6 +88,34 @@ public class ArticleServiceImpl implements ArticleService {
   @Override
   public List<ArticleDto> findAll() {
     return articleRepository.findAll().stream()
+        .map(ArticleDto::fromEntity)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<LigneVenteDto> findHistoriqueVentes(Integer idArticle) {
+    return venteRepository.findAllByArticleId(idArticle).stream()
+        .map(LigneVenteDto::fromEntity)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<LigneCommandeClientDto> findHistoriaueCommandeClient(Integer idArticle) {
+    return commandeClientRepository.findAllByArticleId(idArticle).stream()
+        .map(LigneCommandeClientDto::fromEntity)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<LigneCommandeFournisseurDto> findHistoriqueCommandeFournisseur(Integer idArticle) {
+    return commandeFournisseurRepository.findAllByArticleId(idArticle).stream()
+        .map(LigneCommandeFournisseurDto::fromEntity)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<ArticleDto> findAllArticleByIdCategory(Integer idCategory) {
+    return articleRepository.findAllByCategoryId(idCategory).stream()
         .map(ArticleDto::fromEntity)
         .collect(Collectors.toList());
   }

@@ -53,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public CategoryDto findByCode(String code) {
-    if (StringUtils.hasLength(code)) {
+    if (!StringUtils.hasLength(code)) {
       log.error("Category CODE is null");
       return null;
     }

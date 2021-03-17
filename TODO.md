@@ -13,21 +13,22 @@
 * Chercher les lignes de commande client par commande **️✔**
 
 #### Commande fournisseur:
-* Modifier la quantite **x**
-* Modifier le client **x**
-* Modifier un article **x**
-* Supprimer un article **x**
-* Chercher les lignes de commande fournisseur par commande **x**
-* Ajouter un etat de dommande client **x**
+* Modifier la quantite **️✔**
+* Modifier le client **️✔**
+* Modifier un article **️✔**
+* Supprimer un article **️✔**
+* Chercher les lignes de commande fournisseur par commande **️✔**
+* Ajouter un etat de dommande client **️✔**
     * En cours de preparation
     * Commande validee
     * Commande livree
 
 #### Article
-* Chercher l'historique d'un article **x**
-    * Historique des ventes **x**
-    * Historique des commandes client **x**
-    * Historique des commandes fournisseurs **x**
+* Chercher l'historique d'un article **️✔**
+    * Historique des ventes **️✔**
+    * Historique des commandes client **️✔**
+    * Historique des commandes fournisseurs **️✔**
+* Chercher les articles par categorie **️✔**
   
 #### Controleur Photo
 * Developper le controleur des photos **x**

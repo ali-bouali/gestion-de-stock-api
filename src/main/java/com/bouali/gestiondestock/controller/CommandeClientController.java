@@ -42,8 +42,8 @@ public class CommandeClientController implements CommandeClientApi {
   }
 
   @Override
-  public ResponseEntity<CommandeClientDto> updateArticle(Integer idCommande, Integer idLigneCommande, Integer newIdArticle) {
-    return ResponseEntity.ok(commandeClientService.updateArticle(idCommande, idLigneCommande, newIdArticle));
+  public ResponseEntity<CommandeClientDto> updateArticle(Integer idCommande, Integer idLigneCommande, Integer idArticle) {
+    return ResponseEntity.ok(commandeClientService.updateArticle(idCommande, idLigneCommande, idArticle));
   }
 
   @Override

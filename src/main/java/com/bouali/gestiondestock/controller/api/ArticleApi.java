@@ -3,6 +3,9 @@ package com.bouali.gestiondestock.controller.api;
 import static com.bouali.gestiondestock.utils.Constants.APP_ROOT;
 
 import com.bouali.gestiondestock.dto.ArticleDto;
+import com.bouali.gestiondestock.dto.LigneCommandeClientDto;
+import com.bouali.gestiondestock.dto.LigneCommandeFournisseurDto;
+import com.bouali.gestiondestock.dto.LigneVenteDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -34,7 +37,7 @@ public interface ArticleApi {
   })
   ArticleDto findById(@PathVariable("idArticle") Integer id);
 
-  @GetMapping(value = APP_ROOT + "/articles/{codeArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = APP_ROOT + "/articles/filter/{codeArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
   @ApiOperation(value = "Rechercher un article par CODE", notes = "Cette methode permet de chercher un article par son CODE", response =
       ArticleDto.class)
   @ApiResponses(value = {
@@ -50,6 +53,18 @@ public interface ArticleApi {
       @ApiResponse(code = 200, message = "La liste des article / Une liste vide")
   })
   List<ArticleDto> findAll();
+
+  @GetMapping(value = APP_ROOT + "/articles/historique/vente/{idArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
+  List<LigneVenteDto> findHistoriqueVentes(@PathVariable("idArticle") Integer idArticle);
+
+  @GetMapping(value = APP_ROOT + "/articles/historique/commandeclient/{idArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
+  List<LigneCommandeClientDto> findHistoriaueCommandeClient(@PathVariable("idArticle") Integer idArticle);
+
+  @GetMapping(value = APP_ROOT + "/articles/historique/commandefournisseur/{idArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
+  List<LigneCommandeFournisseurDto> findHistoriqueCommandeFournisseur(@PathVariable("idArticle") Integer idArticle);
+
+  @GetMapping(value = APP_ROOT + "/articles/filter/category/{idCategory}", produces = MediaType.APPLICATION_JSON_VALUE)
+  List<ArticleDto> findAllArticleByIdCategory(@PathVariable("idCategory") Integer idCategory);
 
   @DeleteMapping(value = APP_ROOT + "/articles/delete/{idArticle}")
   @ApiOperation(value = "Supprimer un article", notes = "Cette methode permet de supprimer un article par ID")
