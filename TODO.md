@@ -46,10 +46,10 @@
     * Correction -
     
 #### Utilisateur
-* Reinitialiser mot de passe **x**
+* Reinitialiser mot de passe **️✔**
 
 #### Validators
-* Finaliser les validateurs **x**
+* Finaliser les validateurs **️✔**
 
 #### Statistiques
 * Les articles les plus vendus **x**

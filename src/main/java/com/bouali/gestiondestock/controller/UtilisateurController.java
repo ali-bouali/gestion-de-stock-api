@@ -2,6 +2,7 @@ package com.bouali.gestiondestock.controller;
 
 
 import com.bouali.gestiondestock.controller.api.UtilisateurApi;
+import com.bouali.gestiondestock.dto.ChangerMotDePasseUtilisateurDto;
 import com.bouali.gestiondestock.dto.UtilisateurDto;
 import com.bouali.gestiondestock.services.UtilisateurService;
 import java.util.List;
@@ -21,6 +22,11 @@ public class UtilisateurController implements UtilisateurApi {
   @Override
   public UtilisateurDto save(UtilisateurDto dto) {
     return utilisateurService.save(dto);
+  }
+
+  @Override
+  public UtilisateurDto changerMotDePasse(ChangerMotDePasseUtilisateurDto dto) {
+    return utilisateurService.changerMotDePasse(dto);
   }
 
   @Override

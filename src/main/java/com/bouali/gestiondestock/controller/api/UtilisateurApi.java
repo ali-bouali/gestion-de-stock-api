@@ -3,6 +3,7 @@ package com.bouali.gestiondestock.controller.api;
 
 import static com.bouali.gestiondestock.utils.Constants.UTILISATEUR_ENDPOINT;
 
+import com.bouali.gestiondestock.dto.ChangerMotDePasseUtilisateurDto;
 import com.bouali.gestiondestock.dto.UtilisateurDto;
 import io.swagger.annotations.Api;
 import java.util.List;
@@ -17,6 +18,9 @@ public interface UtilisateurApi {
 
   @PostMapping(UTILISATEUR_ENDPOINT + "/create")
   UtilisateurDto save(@RequestBody UtilisateurDto dto);
+
+  @PostMapping(UTILISATEUR_ENDPOINT + "/update/password")
+  UtilisateurDto changerMotDePasse(@RequestBody ChangerMotDePasseUtilisateurDto dto);
 
   @GetMapping(UTILISATEUR_ENDPOINT + "/{idUtilisateur}")
   UtilisateurDto findById(@PathVariable("idUtilisateur") Integer id);
