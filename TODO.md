@@ -31,7 +31,7 @@
 * Chercher les articles par categorie **️✔**
   
 #### Controleur Photo
-* Developper le controleur des photos **x**
+* Developper le controleur des photos **️✔**
 
 #### Mouvements de stock:
 * Calculer le stock reel de chaque article **x**

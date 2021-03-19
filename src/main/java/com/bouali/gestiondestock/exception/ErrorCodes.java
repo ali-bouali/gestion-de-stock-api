@@ -28,6 +28,9 @@ public enum ErrorCodes {
   BAD_CREDENTIALS(12003),
   VENTE_NOT_FOUND(13000),
   VENTE_NOT_VALID(13001),
+  // Liste des exception techniaues
+  UPDATE_PHOTO_EXCEPTION(14000),
+  UNKNOWN_CONTEXT(14001)
   ;
 
   private int code;
