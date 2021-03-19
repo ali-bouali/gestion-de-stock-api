@@ -4,6 +4,9 @@ import com.bouali.gestiondestock.dto.CategoryDto;
 import com.bouali.gestiondestock.exception.EntityNotFoundException;
 import com.bouali.gestiondestock.exception.ErrorCodes;
 import com.bouali.gestiondestock.exception.InvalidEntityException;
+import com.bouali.gestiondestock.exception.InvalidOperationException;
+import com.bouali.gestiondestock.model.Article;
+import com.bouali.gestiondestock.repository.ArticleRepository;
 import com.bouali.gestiondestock.repository.CategoryRepository;
 import com.bouali.gestiondestock.services.CategoryService;
 import com.bouali.gestiondestock.validator.CategoryValidator;
@@ -19,10 +22,12 @@ import org.springframework.util.StringUtils;
 public class CategoryServiceImpl implements CategoryService {
 
   private CategoryRepository categoryRepository;
+  private ArticleRepository articleRepository;
 
   @Autowired
-  public CategoryServiceImpl(CategoryRepository categoryRepository) {
+  public CategoryServiceImpl(CategoryRepository categoryRepository, ArticleRepository articleRepository) {
     this.categoryRepository = categoryRepository;
+    this.articleRepository = articleRepository;
   }
 
   @Override
@@ -77,6 +82,11 @@ public class CategoryServiceImpl implements CategoryService {
     if (id == null) {
       log.error("Category ID is null");
       return;
+    }
+    List<Article> articles = articleRepository.findAllByCategoryId(id);
+    if (!articles.isEmpty()) {
+      throw new InvalidOperationException("Impossible de supprimer cette categorie qui est deja utilise",
+          ErrorCodes.CATEGORY_ALREADY_IN_USE);
     }
     categoryRepository.deleteById(id);
   }

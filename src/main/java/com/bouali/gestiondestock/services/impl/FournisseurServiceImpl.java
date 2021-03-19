@@ -4,6 +4,9 @@ import com.bouali.gestiondestock.dto.FournisseurDto;
 import com.bouali.gestiondestock.exception.EntityNotFoundException;
 import com.bouali.gestiondestock.exception.ErrorCodes;
 import com.bouali.gestiondestock.exception.InvalidEntityException;
+import com.bouali.gestiondestock.exception.InvalidOperationException;
+import com.bouali.gestiondestock.model.CommandeClient;
+import com.bouali.gestiondestock.repository.CommandeFournisseurRepository;
 import com.bouali.gestiondestock.repository.FournisseurRepository;
 import com.bouali.gestiondestock.services.FournisseurService;
 import com.bouali.gestiondestock.validator.FournisseurValidator;
@@ -19,10 +22,13 @@ import org.springframework.stereotype.Service;
 public class FournisseurServiceImpl implements FournisseurService {
 
   private FournisseurRepository fournisseurRepository;
+  private CommandeFournisseurRepository commandeFournisseurRepository;
 
   @Autowired
-  public FournisseurServiceImpl(FournisseurRepository fournisseurRepository) {
+  public FournisseurServiceImpl(FournisseurRepository fournisseurRepository,
+      CommandeFournisseurRepository commandeFournisseurRepository) {
     this.fournisseurRepository = fournisseurRepository;
+    this.commandeFournisseurRepository = commandeFournisseurRepository;
   }
 
   @Override
@@ -66,6 +72,11 @@ public class FournisseurServiceImpl implements FournisseurService {
     if (id == null) {
       log.error("Fournisseur ID is null");
       return;
+    }
+    List<CommandeClient> commandeFournisseur = commandeFournisseurRepository.findAllByFournisseurId(id);
+    if (!commandeFournisseur.isEmpty()) {
+      throw new InvalidOperationException("Impossible de supprimer un fournisseur qui a deja des commandes",
+          ErrorCodes.FOURNISSEUR_ALREADY_IN_USE);
     }
     fournisseurRepository.deleteById(id);
   }

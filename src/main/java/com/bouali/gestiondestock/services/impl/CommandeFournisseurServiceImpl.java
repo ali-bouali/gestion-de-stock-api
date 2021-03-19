@@ -13,6 +13,7 @@ import com.bouali.gestiondestock.model.Article;
 import com.bouali.gestiondestock.model.CommandeFournisseur;
 import com.bouali.gestiondestock.model.EtatCommande;
 import com.bouali.gestiondestock.model.Fournisseur;
+import com.bouali.gestiondestock.model.LigneCommandeClient;
 import com.bouali.gestiondestock.model.LigneCommandeFournisseur;
 import com.bouali.gestiondestock.model.SourceMvtStk;
 import com.bouali.gestiondestock.model.TypeMvtStk;
@@ -155,6 +156,11 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
     if (id == null) {
       log.error("Commande fournisseur ID is NULL");
       return;
+    }
+    List<LigneCommandeFournisseur> ligneCommandeFournisseurs = ligneCommandeFournisseurRepository.findAllByCommandeFournisseurId(id);
+    if (!ligneCommandeFournisseurs.isEmpty()) {
+      throw new InvalidOperationException("Impossible de supprimer une commande fournisseur deja utilisee",
+          ErrorCodes.COMMANDE_FOURNISSEUR_ALREADY_IN_USE);
     }
     commandeFournisseurRepository.deleteById(id);
   }

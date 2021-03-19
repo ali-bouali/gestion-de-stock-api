@@ -8,6 +8,7 @@ import com.bouali.gestiondestock.dto.VentesDto;
 import com.bouali.gestiondestock.exception.EntityNotFoundException;
 import com.bouali.gestiondestock.exception.ErrorCodes;
 import com.bouali.gestiondestock.exception.InvalidEntityException;
+import com.bouali.gestiondestock.exception.InvalidOperationException;
 import com.bouali.gestiondestock.model.Article;
 import com.bouali.gestiondestock.model.LigneVente;
 import com.bouali.gestiondestock.model.SourceMvtStk;
@@ -117,6 +118,11 @@ public class VentesServiceImpl implements VentesService {
     if (id == null) {
       log.error("Vente ID is NULL");
       return;
+    }
+    List<LigneVente> ligneVentes = ligneVenteRepository.findAllByVenteId(id);
+    if (!ligneVentes.isEmpty()) {
+      throw new InvalidOperationException("Impossible de supprimer une vente ...",
+          ErrorCodes.VENTE_ALREADY_IN_USE);
     }
     ventesRepository.deleteById(id);
   }

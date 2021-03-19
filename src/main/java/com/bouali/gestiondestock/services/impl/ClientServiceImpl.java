@@ -4,7 +4,10 @@ import com.bouali.gestiondestock.dto.ClientDto;
 import com.bouali.gestiondestock.exception.EntityNotFoundException;
 import com.bouali.gestiondestock.exception.ErrorCodes;
 import com.bouali.gestiondestock.exception.InvalidEntityException;
+import com.bouali.gestiondestock.exception.InvalidOperationException;
+import com.bouali.gestiondestock.model.CommandeClient;
 import com.bouali.gestiondestock.repository.ClientRepository;
+import com.bouali.gestiondestock.repository.CommandeClientRepository;
 import com.bouali.gestiondestock.services.ClientService;
 import com.bouali.gestiondestock.validator.ClientValidator;
 import java.util.List;
@@ -18,10 +21,12 @@ import org.springframework.stereotype.Service;
 public class ClientServiceImpl implements ClientService {
 
   private ClientRepository clientRepository;
+  private CommandeClientRepository commandeClientRepository;
 
   @Autowired
-  public ClientServiceImpl(ClientRepository clientRepository) {
+  public ClientServiceImpl(ClientRepository clientRepository, CommandeClientRepository commandeClientRepository) {
     this.clientRepository = clientRepository;
+    this.commandeClientRepository = commandeClientRepository;
   }
 
   @Override
@@ -65,6 +70,11 @@ public class ClientServiceImpl implements ClientService {
     if (id == null) {
       log.error("Client ID is null");
       return;
+    }
+    List<CommandeClient> commandeClients = commandeClientRepository.findAllByClientId(id);
+    if (!commandeClients.isEmpty()) {
+      throw new InvalidOperationException("Impossible de supprimer un client qui a deja des commande clients",
+          ErrorCodes.CLIENT_ALREADY_IN_USE);
     }
     clientRepository.deleteById(id);
   }
