@@ -34,11 +34,14 @@
 * Developper le controleur des photos **️✔**
 
 #### Mouvements de stock:
-* Calculer le stock reel de chaque article **x**
-* Consuter les mouvements du stock de chaque article **x**
-* Effectuer une entree du stock **x**
-* Effectuer une sortie du stock **x**
-* Effectuer une correction de stock **x**
+* Calculer le stock reel de chaque article **️✔**
+* Consuter les mouvements du stock de chaque article **️✔**
+* Effectuer une entree du stock **️✔**
+  * Commande fournisseur
+* Effectuer une sortie du stock **️✔**
+  * Commande client
+  * Vente
+* Effectuer une correction de stock **️✔**
     * Correction +
     * Correction -
     

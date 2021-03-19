@@ -1,6 +1,7 @@
 package com.bouali.gestiondestock.dto;
 
 import com.bouali.gestiondestock.model.MvtStk;
+import com.bouali.gestiondestock.model.SourceMvtStk;
 import com.bouali.gestiondestock.model.TypeMvtStk;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -21,6 +22,8 @@ public class MvtStkDto {
 
   private TypeMvtStk typeMvt;
 
+  private SourceMvtStk sourceMvt;
+
   private Integer idEntreprise;
 
   public static MvtStkDto fromEntity(MvtStk mvtStk) {
@@ -34,6 +37,7 @@ public class MvtStkDto {
         .quantite(mvtStk.getQuantite())
         .article(ArticleDto.fromEntity(mvtStk.getArticle()))
         .typeMvt(mvtStk.getTypeMvt())
+        .sourceMvt(mvtStk.getSourceMvt())
         .idEntreprise(mvtStk.getIdEntreprise())
         .build();
   }
@@ -49,6 +53,7 @@ public class MvtStkDto {
     mvtStk.setQuantite(dto.getQuantite());
     mvtStk.setArticle(ArticleDto.toEntity(dto.getArticle()));
     mvtStk.setTypeMvt(dto.getTypeMvt());
+    mvtStk.setSourceMvt(dto.getSourceMvt());
     mvtStk.setIdEntreprise(dto.getIdEntreprise());
     return mvtStk;
   }

@@ -4,6 +4,7 @@ import com.bouali.gestiondestock.dto.ArticleDto;
 import com.bouali.gestiondestock.dto.CommandeFournisseurDto;
 import com.bouali.gestiondestock.dto.FournisseurDto;
 import com.bouali.gestiondestock.dto.LigneCommandeFournisseurDto;
+import com.bouali.gestiondestock.dto.MvtStkDto;
 import com.bouali.gestiondestock.exception.EntityNotFoundException;
 import com.bouali.gestiondestock.exception.ErrorCodes;
 import com.bouali.gestiondestock.exception.InvalidEntityException;
@@ -13,14 +14,18 @@ import com.bouali.gestiondestock.model.CommandeFournisseur;
 import com.bouali.gestiondestock.model.EtatCommande;
 import com.bouali.gestiondestock.model.Fournisseur;
 import com.bouali.gestiondestock.model.LigneCommandeFournisseur;
+import com.bouali.gestiondestock.model.SourceMvtStk;
+import com.bouali.gestiondestock.model.TypeMvtStk;
 import com.bouali.gestiondestock.repository.ArticleRepository;
 import com.bouali.gestiondestock.repository.CommandeFournisseurRepository;
 import com.bouali.gestiondestock.repository.FournisseurRepository;
 import com.bouali.gestiondestock.repository.LigneCommandeFournisseurRepository;
 import com.bouali.gestiondestock.services.CommandeFournisseurService;
+import com.bouali.gestiondestock.services.MvtStkService;
 import com.bouali.gestiondestock.validator.ArticleValidator;
 import com.bouali.gestiondestock.validator.CommandeFournisseurValidator;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,15 +43,17 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
   private LigneCommandeFournisseurRepository ligneCommandeFournisseurRepository;
   private FournisseurRepository fournisseurRepository;
   private ArticleRepository articleRepository;
+  private MvtStkService mvtStkService;
 
   @Autowired
   public CommandeFournisseurServiceImpl(CommandeFournisseurRepository commandeFournisseurRepository,
       FournisseurRepository fournisseurRepository, ArticleRepository articleRepository,
-      LigneCommandeFournisseurRepository ligneCommandeFournisseurRepository) {
+      LigneCommandeFournisseurRepository ligneCommandeFournisseurRepository, MvtStkService mvtStkService) {
     this.commandeFournisseurRepository = commandeFournisseurRepository;
     this.ligneCommandeFournisseurRepository = ligneCommandeFournisseurRepository;
     this.fournisseurRepository = fournisseurRepository;
     this.articleRepository = articleRepository;
+    this.mvtStkService = mvtStkService;
   }
 
   @Override
@@ -163,9 +170,11 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
     CommandeFournisseurDto commandeFournisseur = checkEtatCommande(idCommande);
     commandeFournisseur.setEtatCommande(etatCommande);
 
-    return CommandeFournisseurDto.fromEntity(
-        commandeFournisseurRepository.save(CommandeFournisseurDto.toEntity(commandeFournisseur))
-    );
+    CommandeFournisseur savedCommande = commandeFournisseurRepository.save(CommandeFournisseurDto.toEntity(commandeFournisseur));
+    if (commandeFournisseur.isCommandeLivree()) {
+      updateMvtStk(idCommande);
+    }
+    return CommandeFournisseurDto.fromEntity(savedCommande);
   }
 
   @Override
@@ -290,5 +299,20 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
       throw new InvalidOperationException("Impossible de modifier l'etat de la commande avec un " + msg + " ID article null",
           ErrorCodes.COMMANDE_FOURNISSEUR_NON_MODIFIABLE);
     }
+  }
+
+  private void updateMvtStk(Integer idCommande) {
+    List<LigneCommandeFournisseur> ligneCommandeFournisseur = ligneCommandeFournisseurRepository.findAllByCommandeFournisseurId(idCommande);
+    ligneCommandeFournisseur.forEach(lig -> {
+      MvtStkDto mvtStkDto = MvtStkDto.builder()
+          .article(ArticleDto.fromEntity(lig.getArticle()))
+          .dateMvt(Instant.now())
+          .typeMvt(TypeMvtStk.ENTREE)
+          .sourceMvt(SourceMvtStk.COMMANDE_FOURNISSEUR)
+          .quantite(lig.getQuantite())
+          .idEntreprise(lig.getIdEntreprise())
+          .build();
+      mvtStkService.entreeStock(mvtStkDto);
+    });
   }
 }
