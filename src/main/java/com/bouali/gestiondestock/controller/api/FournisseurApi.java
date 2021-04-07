@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@Api(FOURNISSEUR_ENDPOINT)
+@Api("fournisseur")
 public interface FournisseurApi {
 
   @PostMapping(FOURNISSEUR_ENDPOINT + "/create")

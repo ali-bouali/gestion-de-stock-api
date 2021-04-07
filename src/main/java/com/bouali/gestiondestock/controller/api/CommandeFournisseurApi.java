@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@Api(COMMANDE_FOURNISSEUR_ENDPOINT)
+@Api("commandefournisseur")
 public interface CommandeFournisseurApi {
 
   @PostMapping(CREATE_COMMANDE_FOURNISSEUR_ENDPOINT)

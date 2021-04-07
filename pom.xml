@@ -102,7 +102,7 @@
             <apiSource>
               <springmvc>true</springmvc>
               <locations>
-                <location>com.bouali.gestiondestock.controller</location>
+                <location>com.bouali.gestiondestock.controller.api</location>
               </locations>
               <basePath>http://localhost:8081</basePath>
               <info>

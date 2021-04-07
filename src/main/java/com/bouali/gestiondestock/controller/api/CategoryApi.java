@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@Api(APP_ROOT + "/categories")
+@Api("categories")
 public interface CategoryApi {
 
   @PostMapping(value = APP_ROOT + "/categories/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,7 +53,7 @@ public interface CategoryApi {
   })
   List<CategoryDto> findAll();
 
-  @DeleteMapping(value = APP_ROOT + "/categories/delete/{idACategory}")
+  @DeleteMapping(value = APP_ROOT + "/categories/delete/{idCategory}")
   @ApiOperation(value = "Supprimer un article", notes = "Cette methode permet de supprimer une categorie par ID")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "La categorie a ete supprime")

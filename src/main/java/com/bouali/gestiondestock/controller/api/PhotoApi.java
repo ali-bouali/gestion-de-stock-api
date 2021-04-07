@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-@Api(APP_ROOT + "/photos")
+@Api("photos")
 public interface PhotoApi {
 
   @PostMapping(APP_ROOT + "/save/{id}/{title}/{context}")

@@ -1,8 +1,7 @@
 package com.bouali.gestiondestock.controller;
 
 
-import static com.bouali.gestiondestock.utils.Constants.AUTHENTICATION_ENDPOINT;
-
+import com.bouali.gestiondestock.controller.api.AuthenticationApi;
 import com.bouali.gestiondestock.dto.auth.AuthenticationRequest;
 import com.bouali.gestiondestock.dto.auth.AuthenticationResponse;
 import com.bouali.gestiondestock.model.auth.ExtendedUser;
@@ -13,14 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(AUTHENTICATION_ENDPOINT)
-public class AuthenticationController {
+public class AuthenticationController implements AuthenticationApi {
 
   @Autowired
   private AuthenticationManager authenticationManager;
@@ -31,8 +26,8 @@ public class AuthenticationController {
   @Autowired
   private JwtUtil jwtUtil;
 
-  @PostMapping("/authenticate")
-  public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+  @Override
+  public ResponseEntity<AuthenticationResponse> authenticate(AuthenticationRequest request) {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
             request.getLogin(),

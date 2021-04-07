@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@Api(UTILISATEUR_ENDPOINT)
+@Api("utilisateurs")
 public interface UtilisateurApi {
 
   @PostMapping(UTILISATEUR_ENDPOINT + "/create")
