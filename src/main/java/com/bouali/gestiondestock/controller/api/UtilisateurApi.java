@@ -25,6 +25,9 @@ public interface UtilisateurApi {
   @GetMapping(UTILISATEUR_ENDPOINT + "/{idUtilisateur}")
   UtilisateurDto findById(@PathVariable("idUtilisateur") Integer id);
 
+  @GetMapping(UTILISATEUR_ENDPOINT + "/find/{email}")
+  UtilisateurDto findByEmail(@PathVariable("email") String email);
+
   @GetMapping(UTILISATEUR_ENDPOINT + "/all")
   List<UtilisateurDto> findAll();
 
