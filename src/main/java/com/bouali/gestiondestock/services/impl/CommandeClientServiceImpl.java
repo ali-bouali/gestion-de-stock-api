@@ -96,14 +96,17 @@ public class CommandeClientServiceImpl implements CommandeClientService {
       log.warn("");
       throw new InvalidEntityException("Article n'existe pas dans la BDD", ErrorCodes.ARTICLE_NOT_FOUND, articleErrors);
     }
-
+    dto.setDateCommande(Instant.now());
     CommandeClient savedCmdClt = commandeClientRepository.save(CommandeClientDto.toEntity(dto));
 
     if (dto.getLigneCommandeClients() != null) {
       dto.getLigneCommandeClients().forEach(ligCmdClt -> {
         LigneCommandeClient ligneCommandeClient = LigneCommandeClientDto.toEntity(ligCmdClt);
         ligneCommandeClient.setCommandeClient(savedCmdClt);
-        ligneCommandeClientRepository.save(ligneCommandeClient);
+        ligneCommandeClient.setIdEntreprise(dto.getIdEntreprise());
+        LigneCommandeClient savedLigneCmd = ligneCommandeClientRepository.save(ligneCommandeClient);
+
+        effectuerSortie(savedLigneCmd);
       });
     }
 
@@ -310,15 +313,19 @@ public class CommandeClientServiceImpl implements CommandeClientService {
   private void updateMvtStk(Integer idCommande) {
     List<LigneCommandeClient> ligneCommandeClients = ligneCommandeClientRepository.findAllByCommandeClientId(idCommande);
     ligneCommandeClients.forEach(lig -> {
-      MvtStkDto mvtStkDto = MvtStkDto.builder()
-          .article(ArticleDto.fromEntity(lig.getArticle()))
-          .dateMvt(Instant.now())
-          .typeMvt(TypeMvtStk.SORTIE)
-          .sourceMvt(SourceMvtStk.COMMANDE_CLIENT)
-          .quantite(lig.getQuantite())
-          .idEntreprise(lig.getIdEntreprise())
-          .build();
-      mvtStkService.sortieStock(mvtStkDto);
+      effectuerSortie(lig);
     });
+  }
+
+  private void effectuerSortie(LigneCommandeClient lig) {
+    MvtStkDto mvtStkDto = MvtStkDto.builder()
+        .article(ArticleDto.fromEntity(lig.getArticle()))
+        .dateMvt(Instant.now())
+        .typeMvt(TypeMvtStk.SORTIE)
+        .sourceMvt(SourceMvtStk.COMMANDE_CLIENT)
+        .quantite(lig.getQuantite())
+        .idEntreprise(lig.getIdEntreprise())
+        .build();
+    mvtStkService.sortieStock(mvtStkDto);
   }
 }

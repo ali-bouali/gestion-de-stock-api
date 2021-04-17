@@ -3,6 +3,8 @@ package com.bouali.gestiondestock.dto;
 import com.bouali.gestiondestock.model.CommandeFournisseur;
 import com.bouali.gestiondestock.model.EtatCommande;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.time.Instant;
 import java.util.List;
 import lombok.Builder;
@@ -24,7 +26,6 @@ public class CommandeFournisseurDto {
 
   private Integer idEntreprise;
 
-  @JsonIgnore
   private List<LigneCommandeFournisseurDto> ligneCommandeFournisseurs;
 
   public static CommandeFournisseurDto fromEntity(CommandeFournisseur commandeFournisseur) {

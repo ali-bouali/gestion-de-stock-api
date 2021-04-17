@@ -97,14 +97,17 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
       log.warn("");
       throw new InvalidEntityException("Article n'existe pas dans la BDD", ErrorCodes.ARTICLE_NOT_FOUND, articleErrors);
     }
-
+    dto.setDateCommande(Instant.now());
     CommandeFournisseur savedCmdFrs = commandeFournisseurRepository.save(CommandeFournisseurDto.toEntity(dto));
 
     if (dto.getLigneCommandeFournisseurs() != null) {
       dto.getLigneCommandeFournisseurs().forEach(ligCmdFrs -> {
         LigneCommandeFournisseur ligneCommandeFournisseur = LigneCommandeFournisseurDto.toEntity(ligCmdFrs);
         ligneCommandeFournisseur.setCommandeFournisseur(savedCmdFrs);
-        ligneCommandeFournisseurRepository.save(ligneCommandeFournisseur);
+        ligneCommandeFournisseur.setIdEntreprise(savedCmdFrs.getIdEntreprise());
+        LigneCommandeFournisseur saveLigne = ligneCommandeFournisseurRepository.save(ligneCommandeFournisseur);
+
+        effectuerEntree(saveLigne);
       });
     }
 
@@ -310,15 +313,19 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
   private void updateMvtStk(Integer idCommande) {
     List<LigneCommandeFournisseur> ligneCommandeFournisseur = ligneCommandeFournisseurRepository.findAllByCommandeFournisseurId(idCommande);
     ligneCommandeFournisseur.forEach(lig -> {
-      MvtStkDto mvtStkDto = MvtStkDto.builder()
-          .article(ArticleDto.fromEntity(lig.getArticle()))
-          .dateMvt(Instant.now())
-          .typeMvt(TypeMvtStk.ENTREE)
-          .sourceMvt(SourceMvtStk.COMMANDE_FOURNISSEUR)
-          .quantite(lig.getQuantite())
-          .idEntreprise(lig.getIdEntreprise())
-          .build();
-      mvtStkService.entreeStock(mvtStkDto);
+      effectuerEntree(lig);
     });
+  }
+
+  private void effectuerEntree(LigneCommandeFournisseur lig) {
+    MvtStkDto mvtStkDto = MvtStkDto.builder()
+        .article(ArticleDto.fromEntity(lig.getArticle()))
+        .dateMvt(Instant.now())
+        .typeMvt(TypeMvtStk.ENTREE)
+        .sourceMvt(SourceMvtStk.COMMANDE_FOURNISSEUR)
+        .quantite(lig.getQuantite())
+        .idEntreprise(lig.getIdEntreprise())
+        .build();
+    mvtStkService.entreeStock(mvtStkDto);
   }
 }

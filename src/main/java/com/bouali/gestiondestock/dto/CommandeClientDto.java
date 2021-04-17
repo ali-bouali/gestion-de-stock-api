@@ -3,6 +3,8 @@ package com.bouali.gestiondestock.dto;
 import com.bouali.gestiondestock.model.CommandeClient;
 import com.bouali.gestiondestock.model.EtatCommande;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +27,6 @@ public class CommandeClientDto {
 
   private Integer idEntreprise;
 
-  @JsonIgnore
   private List<LigneCommandeClientDto> ligneCommandeClients;
 
   public static CommandeClientDto fromEntity(CommandeClient commandeClient) {
@@ -50,6 +51,7 @@ public class CommandeClientDto {
     CommandeClient commandeClient = new CommandeClient();
     commandeClient.setId(dto.getId());
     commandeClient.setCode(dto.getCode());
+    commandeClient.setClient(ClientDto.toEntity(dto.getClient()));
     commandeClient.setDateCommande(dto.getDateCommande());
     commandeClient.setEtatCommande(dto.getEtatCommande());
     commandeClient.setIdEntreprise(dto.getIdEntreprise());

@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -31,9 +33,11 @@ public class MvtStk extends AbstractEntity {
   private Article article;
 
   @Column(name = "typemvt")
+  @Enumerated(EnumType.STRING)
   private TypeMvtStk typeMvt;
 
   @Column(name = "sourcemvt")
+  @Enumerated(EnumType.STRING)
   private SourceMvtStk sourceMvt;
 
   @Column(name = "identreprise")
